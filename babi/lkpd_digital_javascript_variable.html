@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LKPD Digital: JavaScript Variable - Hira Abiguna Ramadhan</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        codebg: '#0f172a',
+                    },
+                    fontFamily: {
+                        mono: ['Fira Code', 'Monaco', 'Consolas', 'Courier New', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090d16;
+            color: #f1f5f9;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        /* Print styles */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .glass-panel {
+                background: white !important;
+                border: 1px solid #ddd !important;
+                color: black !important;
+                box-shadow: none !important;
+            }
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-cyan-500 selection:text-black">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="sidebar" class="no-print w-full md:w-72 bg-slate-900 border-r border-slate-800 flex-shrink-0 flex flex-col justify-between z-30 transition-all duration-300">
+        <div>
+            <!-- Header App -->
+            <div class="p-5 border-b border-slate-800 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
+                        <i class="fa-brands fa-js text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-slate-100 text-sm leading-tight">LKPD DIGITAL A-Z</h1>
+                        <p class="text-xs text-cyan-400 font-medium">JS Variable - PPLG</p>
+                    </div>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-slate-400 hover:text-white p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Profile Summary Card -->
+            <div class="p-4 bg-slate-950/70 border-b border-slate-800/80">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-xs border border-cyan-500/30">
+                        HA
+                    </div>
+                    <div>
+                        <div class="text-xs font-bold text-slate-200">Hira abiguna ramadhan</div>
+                        <div class="text-[11px] text-cyan-400 font-mono">Kelas: X PPLG 2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav id="nav-container" class="p-3 space-y-1 overflow-y-auto max-h-[calc(100vh-230px)] text-xs font-medium">
+                <button onclick="switchTab('identitas')" class="nav-item active w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="identitas">
+                    <i class="fa-solid fa-id-card w-4 text-center text-slate-400 group-hover:text-cyan-400"></i>
+                    <span>A - C. Identitas & Petunjuk</span>
+                </button>
+                <button onclick="switchTab('apersepsi')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="apersepsi">
+                    <i class="fa-solid fa-lightbulb w-4 text-center text-slate-400 group-hover:text-amber-400"></i>
+                    <span>D - E. Apersepsi & Akt 1</span>
+                </button>
+                <button onclick="switchTab('akt2-4')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt2-4">
+                    <i class="fa-solid fa-laptop-code w-4 text-center text-slate-400 group-hover:text-cyan-400"></i>
+                    <span>F - H. Akt 2 - 4 (Praktik)</span>
+                </button>
+                <button onclick="switchTab('akt5-6')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt5-6">
+                    <i class="fa-solid fa-database w-4 text-center text-slate-400 group-hover:text-indigo-400"></i>
+                    <span>I - J. Data & let vs const</span>
+                </button>
+                <button onclick="switchTab('akt7-8')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt7-8">
+                    <i class="fa-solid fa-list-check w-4 text-center text-slate-400 group-hover:text-emerald-400"></i>
+                    <span>K - L. Penamaan & Kuis</span>
+                </button>
+                <button onclick="switchTab('akt9-10')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt9-10">
+                    <i class="fa-solid fa-code w-4 text-center text-slate-400 group-hover:text-cyan-400"></i>
+                    <span>M - N. Tantangan Koding</span>
+                </button>
+                <button onclick="switchTab('akt11-12')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt11-12">
+                    <i class="fa-solid fa-bug w-4 text-center text-slate-400 group-hover:text-rose-400"></i>
+                    <span>O - P. Debugging & Profile</span>
+                </button>
+                <button onclick="switchTab('akt13-ref')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="akt13-ref">
+                    <i class="fa-solid fa-users-rectangle w-4 text-center text-slate-400 group-hover:text-purple-400"></i>
+                    <span>Q - T. Diskusi & Refleksi</span>
+                </button>
+                <button onclick="switchTab('tugas-rubrik')" class="nav-item w-full flex items-center space-x-3 px-3 py-2 rounded-lg transition text-slate-300 hover:bg-slate-800 hover:text-white group" data-tab="tugas-rubrik">
+                    <i class="fa-solid fa-flag-checkered w-4 text-center text-slate-400 group-hover:text-yellow-400"></i>
+                    <span>U - Z. Tugas & Rubrik Nilai</span>
+                </button>
+            </nav>
+        </div>
+
+        <div class="p-4 border-t border-slate-800">
+            <button onclick="window.print()" class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition border border-slate-700">
+                <i class="fa-solid fa-print"></i>
+                <span>Cetak Lembar Kerja (PDF)</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-950 text-slate-200">
+        
+        <!-- Header status -->
+        <header class="no-print bg-slate-900/80 backdrop-blur border-b border-slate-800 px-6 py-3.5 flex items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center space-x-3">
+                <span class="px-2.5 py-1 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded text-xs font-mono font-medium">SMK - PPLG</span>
+                <h2 id="current-tab-title" class="font-bold text-slate-100 text-sm md:text-base">Identitas & Tujuan Pembelajaran</h2>
+            </div>
+            <div class="flex items-center space-x-2 text-xs text-emerald-400 bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-500/30 font-semibold">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Status LKPD: Selesai 100%</span>
+            </div>
+        </header>
+
+        <!-- Dynamic Container Content -->
+        <div class="p-4 md:p-8 max-w-5xl mx-auto w-full space-y-8 flex-1">
+
+            <!-- TAB 1: BAGIAN A, B, C -->
+            <section id="tab-identitas" class="tab-content space-y-6">
+                <!-- Header Title -->
+                <div class="glass-panel p-6 rounded-2xl relative overflow-hidden border border-cyan-500/20 bg-gradient-to-r from-slate-900 via-slate-900 to-cyan-950/40">
+                    <span class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-400 rounded-full text-xs font-semibold uppercase mb-3 border border-cyan-500/20">LEMBAR KERJA PESERTA DIDIK (LKPD) DIGITAL</span>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">DASAR-DASAR PENGEMBANGAN PERANGKAT LUNAK DAN GIM</h1>
+                    <p class="text-cyan-400 text-sm mt-1 font-medium">Materi Utama: JavaScript - Variable</p>
+                </div>
+
+                <!-- Bagian A: Identitas -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-id-card"></i> A. IDENTITAS PEMBELAJARAN
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Nama Peserta Didik</span>
+                            <span class="text-base font-bold text-white font-mono">Hira abiguna ramadhan</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Kelas</span>
+                            <span class="text-base font-bold text-cyan-400 font-mono">X PPLG 2</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Kelompok</span>
+                            <span class="text-sm font-semibold text-slate-200">Kelompok 1 (Mandiri & Praktik)</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 block mb-1">Mata Pelajaran & Alokasi Waktu</span>
+                            <span class="text-sm font-semibold text-slate-200">Dasar PPLG | 2 × 45 Menit</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian B: Tujuan -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-bullseye text-rose-400"></i> B. TUJUAN PEMBELAJARAN
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">1.</span>
+                            <span>Menjelaskan pengertian variable dengan bahasa sendiri secara jelas.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">2.</span>
+                            <span>Menjelaskan fungsi variable dalam menyimpan dan mengolah data program.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">3.</span>
+                            <span>Membedakan keyword <code class="text-cyan-300 font-mono">let</code> dan <code class="text-cyan-300 font-mono">const</code> secara tepat.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">4.</span>
+                            <span>Membuat variable baru menggunakan sintaks JavaScript yang sah.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">5.</span>
+                            <span>Memberikan nama variable sesuai aturan (camelCase, case-sensitive).</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">6.</span>
+                            <span>Menyimpan berbagai jenis data (String, Number, Boolean) ke dalam variable.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">7.</span>
+                            <span>Menampilkan nilai variable menggunakan keluaran <code class="text-cyan-300 font-mono">console.log()</code>.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2">
+                            <span class="text-cyan-400 font-bold">8.</span>
+                            <span>Membuat program JavaScript sederhana menggunakan beberapa variable.</span>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/60 rounded-lg flex items-start space-x-2 md:col-span-2">
+                            <span class="text-cyan-400 font-bold">9.</span>
+                            <span>Menemukan dan memperbaiki kesalahan (debugging) sederhana pada penggunaan variable.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian C: Petunjuk -->
+                <div class="glass-panel p-6 rounded-2xl border border-amber-500/20 bg-amber-950/10 space-y-3">
+                    <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> C. PETUNJUK KESELAMATAN DAN KERJA
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300">
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Gunakan perangkat komputer/laptop dengan hati-hati dan tertib.</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Jangan menghapus atau mengubah file milik teman lain.</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Simpan pekerjaan secara berkala untuk menghindari kehilangan data.</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Jangan menyalin kode teman tanpa memahami logika fungsinya.</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Jika menemukan error, baca pesan error di console dengan teliti.</span></div>
+                        <div class="flex items-center space-x-2"><i class="fa-solid fa-check text-amber-400"></i><span>Diskusikan penyebab error bersama kelompok atau instruktur.</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: BAGIAN D & E -->
+            <section id="tab-apersepsi" class="tab-content hidden space-y-6">
+                <!-- Bagian D: Apersepsi -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-brain"></i> D. APERSEPSI
+                    </h2>
+                    <p class="text-sm text-slate-300">
+                        Bayangkan kamu sedang membuat aplikasi data siswa. Program perlu mengetahui data: Nama siswa ("Budi"), Kelas ("XI RPL 1"), Umur (16), Nilai (85), Jurusan.
+                    </p>
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                        <span class="text-xs font-bold text-slate-400 block">Jawaban Dugaan Awal Siswa:</span>
+                        <p class="text-xs text-cyan-300 font-mono leading-relaxed bg-slate-950 p-3 rounded border border-slate-800">
+                            Untuk menyimpan informasi tersebut di dalam program, kita dapat menggunakan konsep Variable. Variable bekerja sebagai wadah penyimpan nilai di memori komputer yang diberi nama penanda. Contoh penulisan kodenya:<br><br>
+                            let namaSiswa = "Budi";<br>
+                            let kelas = "XI RPL 1";<br>
+                            let umur = 16;<br>
+                            let nilai = 85;
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Bagian E: Aktivitas 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-eye"></i> E. AKTIVITAS 1 - MENGAMATI
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Kode Box -->
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 font-mono text-xs space-y-2">
+                            <span class="text-slate-500">// Kode JavaScript yang diamati:</span>
+                            <pre class="text-slate-200"><span class="text-purple-400">let</span> nama = <span class="text-emerald-400">"Budi"</span>;
+<span class="text-purple-400">let</span> umur = <span class="text-amber-400">16</span>;
+<span class="text-purple-400">let</span> nilai = <span class="text-amber-400">85</span>;
+
+<span class="text-cyan-400">console</span>.log(nama);
+<span class="text-cyan-400">console</span>.log(umur);
+<span class="text-cyan-400">console</span>.log(nilai);</pre>
+                            <button onclick="runSimulatedCode('akt1')" class="w-full mt-2 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-sans font-bold text-xs rounded transition">
+                                <i class="fa-solid fa-play mr-1"></i> Uji Kode di Console
+                            </button>
+                        </div>
+
+                        <!-- Simulated Output -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs flex flex-col justify-between">
+                            <div>
+                                <span class="text-slate-500 border-b border-slate-800 pb-1 block mb-2">Browser Developer Console</span>
+                                <div id="console-output-akt1" class="space-y-1 text-slate-300">
+                                    <div class="text-emerald-400">> Budi</div>
+                                    <div class="text-amber-400">> 16</div>
+                                    <div class="text-amber-400">> 85</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jawaban Pertanyaan Akt 1 -->
+                    <div class="space-y-3 pt-4 border-t border-slate-800 text-xs">
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">1. Apa yang ditampilkan pada Console?</span>
+                            <p class="text-cyan-300">Console menampilkan nilai dari ketiga variable secara berurutan pada baris terpisah, yaitu: <code class="text-emerald-400">Budi</code>, <code class="text-amber-400">16</code>, dan <code class="text-amber-400">85</code>.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">2. Menurutmu, apa fungsi <code class="text-cyan-300 font-mono">nama</code>, <code class="text-cyan-300 font-mono">umur</code>, dan <code class="text-cyan-300 font-mono">nilai</code>?</span>
+                            <p class="text-cyan-300">Ketiganya berfungsi sebagai **nama variabel (identifier)** yang bertindak sebagai label/wadah untuk menyimpan data berupa teks nama, angka umur, dan angka nilai di dalam memori program.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">3. Apa yang terjadi jika kode <code class="text-cyan-300 font-mono">console.log(nama);</code> dijalankan tanpa membuat variabelnya terlebih dahulu?</span>
+                            <p class="text-rose-400">Akan terjadi kesalahan error: <code class="font-mono bg-slate-950 px-1 py-0.5 rounded text-rose-300">Uncaught ReferenceError: nama is not defined</code> karena komputer tidak menemukan variabel bernama 'nama' di dalam memori.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">4. Menurut dugaanmu, apa yang dimaksud dengan variable?</span>
+                            <p class="text-cyan-300">Variable adalah lokasi penyimpanan di memori komputer yang diberi nama penanda untuk menyimpan data (seperti teks atau angka) agar nilainya dapat dipanggil, digunakan, atau diubah kembali oleh program.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: BAGIAN F, G, H -->
+            <section id="tab-akt2-4" class="tab-content hidden space-y-6">
+                <!-- Bagian F & G -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-book-open"></i> F & G. AKTIVITAS 2 & 3 - MENGENAL & PRAKTIK VARIABLE
+                    </h2>
+                    
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-2">
+                        <h4 class="font-bold text-slate-200">Struktur Komponen Pembentuk Variable:</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 font-mono text-center">
+                            <div class="p-2 bg-purple-950/40 border border-purple-500/30 rounded"><span class="text-purple-400 font-bold">let</span><br><span class="text-slate-400 text-[10px]">Membuat variable</span></div>
+                            <div class="p-2 bg-cyan-950/40 border border-cyan-500/30 rounded"><span class="text-cyan-400 font-bold">nama</span><br><span class="text-slate-400 text-[10px]">Nama variable</span></div>
+                            <div class="p-2 bg-slate-800 border border-slate-700 rounded"><span class="text-white font-bold">=</span><br><span class="text-slate-400 text-[10px]">Memberikan nilai</span></div>
+                            <div class="p-2 bg-emerald-950/40 border border-emerald-500/30 rounded"><span class="text-emerald-400 font-bold">"Andi"</span><br><span class="text-slate-400 text-[10px]">Nilai yang disimpan</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Hasil Pengamatan Aktivitas 3 -->
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <h4 class="font-bold text-emerald-400 text-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-square-poll-vertical"></i> Hasil Pengamatan Console (Aktivitas 3):
+                        </h4>
+                        <div class="p-3 bg-slate-950 rounded border border-slate-800 font-mono text-xs space-y-1 text-emerald-300">
+                            <div>Nama &nbsp;: Budi</div>
+                            <div>Kelas : XI RPL 1</div>
+                            <div>Umur &nbsp;: 16</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian H: Aktivitas 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-flask"></i> H. AKTIVITAS 4 - EKSPERIMEN UBAH DATA
+                    </h2>
+                    
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs font-mono space-y-2">
+                        <span class="text-slate-400">// Pengubahan Data Sesuai Identitas Siswa Hira:</span>
+                        <div class="text-cyan-300">
+                            let nama = <span class="text-emerald-400">"Hira abiguna ramadhan"</span>;<br>
+                            let kelas = <span class="text-emerald-400">"X PPLG 2"</span>;<br>
+                            let umur = <span class="text-amber-400">16</span>;
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-xs">
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">1. Apakah hasil pada Console berubah?</span>
+                            <p class="text-cyan-300">**Ya, berubah.** Nilai keluaran pada console langsung menyesuaikan dengan data teks baru yang kita gantikan.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">2. Bagian kode mana yang kamu ubah?</span>
+                            <p class="text-cyan-300">Bagian **nilai data (value)** yang berada di sebelah kanan tanda sama dengan (<code class="text-white">=</code>), yaitu mengubah string <code class="text-emerald-400">"Budi"</code> menjadi <code class="text-emerald-400">"Hira abiguna ramadhan"</code>, <code class="text-emerald-400">"XI RPL 1"</code> menjadi <code class="text-emerald-400">"X PPLG 2"</code>.</p>
+                        </div>
+                        <div class="bg-slate-900 p-3 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">3. Mengapa program dapat menampilkan data yang baru?</span>
+                            <p class="text-cyan-300">Karena nilai variabel dapat diperbarui di dalam memori. Saat <code class="text-cyan-400">console.log()</code> dieksekusi, komputer akan membaca dan mengambil nilai paling terbaru yang tersimpan di dalam variabel tersebut.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: BAGIAN I & J -->
+            <section id="tab-akt5-6" class="tab-content hidden space-y-6">
+                <!-- Bagian I: Aktivitas 5 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-shapes"></i> I. AKTIVITAS 5 - VARIABLE UNTUK MENYIMPAN BERBAGAI DATA
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900 uppercase text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">Variable</th>
+                                    <th class="p-3">Nilai</th>
+                                    <th class="p-3">Jenis Data (Tipe Data)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 font-mono">
+                                <tr>
+                                    <td class="p-3 text-cyan-400">nama</td>
+                                    <td class="p-3 text-emerald-400">"Andi"</td>
+                                    <td class="p-3 font-bold text-purple-400">String (Teks)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-cyan-400">umur</td>
+                                    <td class="p-3 text-amber-400">17</td>
+                                    <td class="p-3 font-bold text-amber-400">Number (Angka)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-cyan-400">tinggi</td>
+                                    <td class="p-3 text-amber-400">170</td>
+                                    <td class="p-3 font-bold text-amber-400">Number (Angka)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 text-cyan-400">aktif</td>
+                                    <td class="p-3 text-indigo-400">true</td>
+                                    <td class="p-3 font-bold text-indigo-400">Boolean (True/False)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-2">
+                        <h4 class="font-bold text-slate-200">Kesimpulan Jenis Data:</h4>
+                        <p class="text-slate-300">• Data yang ditulis menggunakan tanda kutip seperti <code class="text-emerald-400 font-mono">"Andi"</code> merupakan data: <strong class="text-purple-400">String (Teks)</strong>.</p>
+                        <p class="text-slate-300">• Sedangkan angka tanpa tanda kutip seperti <code class="text-amber-400 font-mono">17</code> merupakan data: <strong class="text-amber-400">Number (Angka)</strong>.</p>
+                    </div>
+                </div>
+
+                <!-- Bagian J: Aktivitas 6 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-lock"></i> J. AKTIVITAS 6 - MENGENAL let DAN const
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-400">// Menggunakan let (Nilai dapat diubah)</span><br>
+                            let umur = 16;<br>
+                            umur = 17; <span class="text-slate-500">// Diubah</span><br>
+                            console.log(umur);<br>
+                            <span class="text-emerald-400 block mt-2">> Hasil: 17</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="text-slate-400">// Menggunakan const (Konstanta Tetap)</span><br>
+                            const nama = "Budi";<br>
+                            nama = "Andi"; <span class="text-rose-400">// Error!</span><br>
+                            console.log(nama);<br>
+                            <span class="text-rose-400 block mt-2">> TypeError: Assignment to constant variable.</span>
+                        </div>
+                    </div>
+
+                    <!-- Tabel let vs const -->
+                    <div class="space-y-2 text-xs">
+                        <h4 class="font-bold text-slate-200">Tabel Perbandingan Keyword:</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs border border-slate-800">
+                                <thead class="bg-slate-900 text-slate-300">
+                                    <tr>
+                                        <th class="p-2.5 border-b border-slate-800">Keyword</th>
+                                        <th class="p-2.5 border-b border-slate-800">Nilai dapat diubah?</th>
+                                        <th class="p-2.5 border-b border-slate-800">Kegunaan Sederhana</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-800 font-mono">
+                                    <tr>
+                                        <td class="p-2.5 text-purple-400 font-bold">let</td>
+                                        <td class="p-2.5 text-emerald-400 font-bold">Ya (Dapat diubah)</td>
+                                        <td class="p-2.5 text-slate-300 font-sans">Untuk data variabel yang nilainya masih mungkin berubah (contoh: umur, nilai, stok).</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2.5 text-purple-400 font-bold">const</td>
+                                        <td class="p-2.5 text-rose-400 font-bold">Tidak (Tetap / Konstan)</td>
+                                        <td class="p-2.5 text-slate-300 font-sans">Untuk data yang nilainya tetap dan tidak perlu diubah (contoh: nama sekolah, tanggal lahir).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: BAGIAN K & L -->
+            <section id="tab-akt7-8" class="tab-content hidden space-y-6">
+                <!-- Bagian K: Aktivitas 7 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-ruler"></i> K. AKTIVITAS 7 - ATURAN PENAMAAN VARIABLE
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-emerald-950/20 border border-emerald-500/30 p-4 rounded-xl space-y-2">
+                            <h4 class="font-bold text-emerald-400 flex items-center gap-2"><i class="fa-solid fa-circle-check"></i> Diperbolehkan:</h4>
+                            <ul class="font-mono space-y-1 text-slate-300">
+                                <li>let nama;</li>
+                                <li>let namaSiswa; <span class="text-slate-400 font-sans">(camelCase)</span></li>
+                                <li>let nama_siswa; <span class="text-slate-400 font-sans">(underscore)</span></li>
+                                <li>let nilai1; <span class="text-slate-400 font-sans">(angka di belakang)</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-rose-950/20 border border-rose-500/30 p-4 rounded-xl space-y-2">
+                            <h4 class="font-bold text-rose-400 flex items-center gap-2"><i class="fa-solid fa-circle-xmark"></i> Tidak Diperbolehkan:</h4>
+                            <ul class="font-mono space-y-1 text-slate-300">
+                                <li>let 1nama; <span class="text-rose-400 font-sans">(diawali angka - Error)</span></li>
+                                <li>let nama siswa; <span class="text-rose-400 font-sans">(ada spasi - Error)</span></li>
+                                <li>let nama-siswa; <span class="text-rose-400 font-sans">(pakai strip/dash - Error)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian L: Aktivitas 8 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-square-check"></i> L. AKTIVITAS 8 - MANA YANG BENAR? (KUIS TERISI)
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900 uppercase text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-2.5">No</th>
+                                    <th class="p-2.5">Nama Variable</th>
+                                    <th class="p-2.5">Status (V / X)</th>
+                                    <th class="p-2.5">Perbaikan Nama Variable yang Salah</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 font-mono">
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">1</td>
+                                    <td class="p-2.5 text-cyan-300">nama</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">2</td>
+                                    <td class="p-2.5 text-cyan-300">namaSiswa</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">3</td>
+                                    <td class="p-2.5 text-cyan-300">nama_siswa</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr class="bg-rose-950/10">
+                                    <td class="p-2.5 text-slate-500">4</td>
+                                    <td class="p-2.5 text-rose-300">2nama</td>
+                                    <td class="p-2.5 text-rose-400 font-bold">✕ Salah</td>
+                                    <td class="p-2.5 text-emerald-400">nama2 / namaDua</td>
+                                </tr>
+                                <tr class="bg-rose-950/10">
+                                    <td class="p-2.5 text-slate-500">5</td>
+                                    <td class="p-2.5 text-rose-300">nama siswa</td>
+                                    <td class="p-2.5 text-rose-400 font-bold">✕ Salah</td>
+                                    <td class="p-2.5 text-emerald-400">namaSiswa / nama_siswa</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">6</td>
+                                    <td class="p-2.5 text-cyan-300">nilaiAkhir</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">7</td>
+                                    <td class="p-2.5 text-cyan-300">nilai1</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr class="bg-rose-950/10">
+                                    <td class="p-2.5 text-slate-500">8</td>
+                                    <td class="p-2.5 text-rose-300">nilai-akhir</td>
+                                    <td class="p-2.5 text-rose-400 font-bold">✕ Salah</td>
+                                    <td class="p-2.5 text-emerald-400">nilaiAkhir / nilai_akhir</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">9</td>
+                                    <td class="p-2.5 text-cyan-300">Alamat</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2.5 text-slate-500">10</td>
+                                    <td class="p-2.5 text-cyan-300">alamatSiswa</td>
+                                    <td class="p-2.5 text-emerald-400 font-bold">✓ Valid</td>
+                                    <td class="p-2.5 text-slate-500">- (Sudah Benar)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: BAGIAN M & N -->
+            <section id="tab-akt9-10" class="tab-content hidden space-y-6">
+                <!-- Bagian M: Aktivitas 9 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-code"></i> M. AKTIVITAS 9 - TANTANGAN DATA DIRI (MIN 5 VARIABLE)
+                    </h2>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <span class="text-xs text-slate-400 font-mono">// Kode JavaScript Versi Siswa: Hira Abiguna Ramadhan</span>
+                        <textarea id="akt9-editor" rows="7" class="w-full bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono text-cyan-300 focus:outline-none">let nama = "Hira abiguna ramadhan";
+let kelas = "X PPLG 2";
+let jurusan = "Pengembangan Perangkat Lunak dan Gim";
+let umur = 16;
+let hobi = "Koding dan Eksplorasi Game";
+
+console.log(nama);
+console.log(kelas);
+console.log(jurusan);
+console.log(umur);
+console.log(hobi);</textarea>
+                        <button onclick="runCustomCode('akt9')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-play mr-1"></i> Jalankan & Tes Program
+                        </button>
+                        <div id="akt9-console" class="p-3 bg-black rounded border border-slate-800 text-emerald-400 font-mono text-xs min-h-[50px]">
+                            > Hira abiguna ramadhan<br>> X PPLG 2<br>> Pengembangan Perangkat Lunak dan Gim<br>> 16<br>> Koding dan Eksplorasi Game
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian N: Aktivitas 10 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-graduation-cap"></i> N. AKTIVITAS 10 - TANTANGAN LEVEL 2 (DATA NILAI SISWA)
+                    </h2>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <textarea id="akt10-editor" rows="6" class="w-full bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono text-cyan-300 focus:outline-none">let nama = "Hira abiguna ramadhan";
+let bahasaIndonesia = 88;
+let matematika = 92;
+let produktif = 95;
+
+console.log(nama);
+console.log(bahasaIndonesia);
+console.log(matematika);
+console.log(produktif);</textarea>
+                        <button onclick="runCustomCode('akt10')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-play mr-1"></i> Jalankan Program Nilai
+                        </button>
+                        <div id="akt10-console" class="p-3 bg-black rounded border border-slate-800 text-emerald-400 font-mono text-xs min-h-[50px]">
+                            > Hira abiguna ramadhan<br>> 88<br>> 92<br>> 95
+                        </div>
+                    </div>
+
+                    <!-- Jawaban Pertanyaan Akt 10 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-2">
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">1. Berapa variable yang dibuat?</span>
+                            <span class="text-cyan-300 font-mono font-bold">4 Variable</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">2. Variable menyimpan teks?</span>
+                            <span class="text-emerald-400 font-mono font-bold">nama</span>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-lg border border-slate-800">
+                            <span class="font-bold text-slate-200 block mb-1">3. Variable menyimpan angka?</span>
+                            <span class="text-amber-400 font-mono font-bold">bahasaIndonesia, matematika, produktif</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 7: BAGIAN O & P -->
+            <section id="tab-akt11-12" class="tab-content hidden space-y-6">
+                <!-- Bagian O: Aktivitas 11 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-rose-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-bug"></i> O. AKTIVITAS 11 - DEBUGGING (PERBAIKAN KESALAHAN KODE)
+                    </h2>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <span class="text-xs text-slate-400 font-mono">// Kode Yang Sudah Diperbaiki Tanpa Error:</span>
+                        <textarea id="akt11-debug-editor" rows="6" class="w-full bg-slate-950 border border-emerald-500/40 rounded p-3 text-xs font-mono text-emerald-300 focus:outline-none">let namaSiswa = "Budi";
+let umur = 16;
+let kelas2 = "XI RPL";
+
+console.log(namaSiswa);
+console.log(umur);
+console.log(kelas2);</textarea>
+                        <button onclick="checkDebuggingGame()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-wrench mr-1"></i> Verifikasi Perbaikan
+                        </button>
+                        <div id="akt11-console" class="p-3 bg-black rounded border border-slate-800 text-emerald-400 font-mono text-xs min-h-[50px]">
+                            ✓ LUAR BIASA! KODE BERHASIL DIPERBAIKI:<br>> Budi<br>> 16<br>> XI RPL
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 text-xs pt-2">
+                        <h4 class="font-bold text-slate-200">Daftar 3 Kesalahan yang Ditemukan & Diperbaiki:</h4>
+                        <div class="p-2.5 bg-slate-900 rounded border border-slate-800 text-slate-300">
+                            <strong>1. Spasi pada nama variabel:</strong> <code class="text-rose-400">let nama siswa</code> diperbaiki menjadi <code class="text-emerald-400">let namaSiswa</code>.
+                        </div>
+                        <div class="p-2.5 bg-slate-900 rounded border border-slate-800 text-slate-300">
+                            <strong>2. Diawali angka:</strong> <code class="text-rose-400">let 2kelas</code> diperbaiki menjadi <code class="text-emerald-400">let kelas2</code>.
+                        </div>
+                        <div class="p-2.5 bg-slate-900 rounded border border-slate-800 text-slate-300">
+                            <strong>3. Pemanggilan di console.log:</strong> <code class="text-rose-400">console.log(nama siswa)</code> dan <code class="text-rose-400">console.log(2kelas)</code> disesuaikan dengan identifier yang valid.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian P: Aktivitas 12 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-address-card"></i> P. AKTIVITAS 12 - CHALLENGE: PROFIL SISWA LENGKAP
+                    </h2>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <textarea id="akt12-editor" rows="10" class="w-full bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono text-cyan-300 focus:outline-none">const nama = "Hira abiguna ramadhan";
+const kelas = "X PPLG 2";
+const jurusan = "Pengembangan Perangkat Lunak dan Gim";
+const umur = 16;
+const kota = "Garut";
+const hobi = "Koding";
+const citaCita = "Senior Software Engineer";
+
+// 2 Variable Tambahan Baru:
+const email = "hira.ramadhan@smk.belajar.id";
+let statusSiswa = "Aktif";
+
+console.log(nama);
+console.log(kelas);
+console.log(jurusan);
+console.log(umur);
+console.log(kota);
+console.log(hobi);
+console.log(citaCita);
+console.log(email);
+console.log(statusSiswa);</textarea>
+                        <button onclick="runCustomCode('akt12')" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-play mr-1"></i> Run Kode Profil
+                        </button>
+                        <div id="akt12-console" class="p-3 bg-black rounded border border-slate-800 text-emerald-400 font-mono text-xs min-h-[50px]">
+                            > Hira abiguna ramadhan<br>> X PPLG 2<br>> Pengembangan Perangkat Lunak dan Gim<br>> 16<br>> Garut<br>> Koding<br>> Senior Software Engineer<br>> hira.ramadhan@smk.belajar.id<br>> Aktif
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 8: BAGIAN Q, R, S, T -->
+            <section id="tab-akt13-ref" class="tab-content hidden space-y-6">
+                <!-- Bagian Q: Think Pair Share -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-purple-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-comments"></i> Q. AKTIVITAS 13 - THINK PAIR SHARE
+                    </h2>
+
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-cyan-400">1. Think (Pemikiran Sendiri):</h4>
+                            <p class="text-slate-300">Programmer membutuhkan variable untuk menyimpan data dinamis secara fleksibel di memori agar nilai data tersebut dapat diproses berulang kali tanpa harus menuliskan nilainya secara manual di setiap baris program.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-purple-400">2. Pair (Hasil Diskusi Teman Sebangku):</h4>
+                            <p class="text-slate-300">Jawaban kami **Sama**. Variabel mempermudah pembacaan kode (clean code) dan efisiensi pengubahan data secara terpusat.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-emerald-400">3. Share (Kesimpulan Kelompok):</h4>
+                            <p class="text-slate-300">Variable adalah pondasi utama pemrograman untuk manajemen memori, efisiensi penulisan kode, dan memungkinkan aplikasi menerima masukan (input) dari pengguna yang berubah-ubah.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian R: Refleksi (Format 3 Kolom Centang) -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-cyan-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-list-check"></i> R. REFLEKSI PEMAHAMAN DIRI
+                    </h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs text-slate-300">
+                            <thead class="bg-slate-900 uppercase text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">Pernyataan Refleksi Evaluasi Diri</th>
+                                    <th class="p-3 text-center w-28">Belum Paham</th>
+                                    <th class="p-3 text-center w-28">Mulai Paham</th>
+                                    <th class="p-3 text-center w-28">Paham</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya memahami pengertian variable</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-emerald-400 font-bold text-base">☑</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya dapat membuat variable dengan let</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-emerald-400 font-bold text-base">☑</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya memahami penggunaan const</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-amber-400 font-bold text-base">☑</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya dapat menyimpan data ke dalam variable</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-emerald-400 font-bold text-base">☑</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya dapat menampilkan variable dengan console.log()</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-emerald-400 font-bold text-base">☑</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya dapat memberikan nama variable dengan benar</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-emerald-400 font-bold text-base">☑</td>
+                                </tr>
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="p-3">Saya dapat menemukan kesalahan (debugging) variable</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                    <td class="p-3 text-center text-amber-400 font-bold text-base">☑</td>
+                                    <td class="p-3 text-center text-slate-600">☐</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bagian S & T: Refleksi 3-2-1 & Kesimpulan -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-square-poll-vertical"></i> S & T. REFLEKSI 3-2-1 & KESIMPULAN
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-cyan-400">3 Hal Dipelajari:</h4>
+                            <p class="text-slate-300">1. Konsep dasar penyimpan data variable.<br>2. Perbedaan let vs const.<br>3. Aturan penamaan baku (camelCase).</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-amber-400">2 Hal Membingungkan:</h4>
+                            <p class="text-slate-300">1. Kapan tepatnya harus memakai const pada tipe data kompleks.<br>2. Pesan error saat lupa menutup tanda kutip string.</p>
+                        </div>
+                        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-1">
+                            <h4 class="font-bold text-emerald-400">1 Hal Ingin Dicoba:</h4>
+                            <p class="text-slate-300">Membuat aplikasi kalkulator interaktif menggunakan gabungan beberapa variable angka.</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 text-xs space-y-2">
+                        <h4 class="font-bold text-slate-100 border-b border-slate-800 pb-1">T. KESIMPULAN AKHIR:</h4>
+                        <p class="text-slate-300">• <strong>Variable adalah:</strong> Tempat penyimpanan sementara data di memori komputer yang memiliki nama label.</p>
+                        <p class="text-slate-300">• <strong>let digunakan untuk:</strong> Mengularasi variabel yang nilainya dapat diubah kembali di kemudian baris kode.</p>
+                        <p class="text-slate-300">• <strong>const digunakan untuk:</strong> Mengularasi variabel konstan yang nilainya tetap dan tidak boleh diubah.</p>
+                        <p class="text-slate-300">• <strong>Untuk menampilkan isi variable ke Console:</strong> Menggunakan perintah <code class="text-cyan-300 font-mono">console.log(namaVariable)</code>.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 9: BAGIAN U, V, W, X, Y, Z -->
+            <section id="tab-tugas-rubrik" class="tab-content hidden space-y-6">
+                <!-- Bagian U: Tugas Individu -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-yellow-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-box-archive"></i> U. TUGAS INDIVIDU - DATA PRODUK SEDERHANA
+                    </h2>
+
+                    <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <textarea id="tugas-editor" rows="9" class="w-full bg-slate-950 border border-slate-800 rounded p-3 text-xs font-mono text-cyan-300 focus:outline-none">const namaProduk = "Mechanical Keyboard RGB";
+const kategori = "Perangkat Komputer";
+const harga = 450000;
+let stok = 12;
+const merek = "Keychron";
+const tersedia = true;
+
+console.log("Nama Produk : " + namaProduk);
+console.log("Kategori    : " + kategori);
+console.log("Harga       : Rp" + harga);
+console.log("Stok        : " + stok);
+console.log("Merek       : " + merek);
+console.log("Status Ada  : " + tersedia);</textarea>
+                        <button onclick="runCustomCode('tugas')" class="px-4 py-2 bg-yellow-600 hover:bg-yellow-500 text-white rounded text-xs font-bold">
+                            <i class="fa-solid fa-play mr-1"></i> Uji Program Produk
+                        </button>
+                        <div id="tugas-console" class="p-3 bg-black rounded border border-slate-800 text-emerald-400 font-mono text-xs min-h-[50px]">
+                            > Nama Produk : Mechanical Keyboard RGB<br>> Kategori    : Perangkat Komputer<br>> Harga       : Rp450000<br>> Stok        : 12<br>> Merek       : Keychron<br>> Status Ada  : true
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian V, W, X: Rubrik & Penilaian -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h2 class="text-lg font-bold text-blue-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-clipboard-check"></i> V, W, X. RUBRIK PENILAIAN HASIL & SIKAP
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <!-- Penilaian Sikap -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-200">W. Penilaian Sikap (Skala 4):</h4>
+                            <div class="space-y-1 text-slate-300 font-mono">
+                                <div class="flex justify-between border-b border-slate-800 pb-1"><span>Kedisiplinan</span><span class="text-emerald-400 font-bold">Skor 4 (Sangat Baik)</span></div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1"><span>Kerja sama</span><span class="text-emerald-400 font-bold">Skor 4 (Sangat Baik)</span></div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1"><span>Tanggung jawab</span><span class="text-emerald-400 font-bold">Skor 4 (Sangat Baik)</span></div>
+                                <div class="flex justify-between border-b border-slate-800 pb-1"><span>Keaktifan</span><span class="text-emerald-400 font-bold">Skor 4 (Sangat Baik)</span></div>
+                                <div class="flex justify-between"><span>Ketelitian</span><span class="text-emerald-400 font-bold">Skor 4 (Sangat Baik)</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Rubrik Bobot -->
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                            <h4 class="font-bold text-slate-200">X. Rubrik Kelengkapan Program:</h4>
+                            <div class="space-y-1 text-slate-300">
+                                <div class="flex justify-between"><span>Program Berjalan Tanpa Error</span><span class="text-cyan-400 font-bold">20%</span></div>
+                                <div class="flex justify-between"><span>Penggunaan Variable Tepat</span><span class="text-cyan-400 font-bold">20%</span></div>
+                                <div class="flex justify-between"><span>Aturan Penamaan Benar</span><span class="text-cyan-400 font-bold">15%</span></div>
+                                <div class="flex justify-between"><span>Penggunaan let & const Tepat</span><span class="text-cyan-400 font-bold">15%</span></div>
+                                <div class="flex justify-between"><span>Tipe Data Sesuai</span><span class="text-cyan-400 font-bold">10%</span></div>
+                                <div class="flex justify-between"><span>Output Console Berhasil</span><span class="text-cyan-400 font-bold">10%</span></div>
+                                <div class="flex justify-between"><span>Kerapian Kode & Indentasi</span><span class="text-cyan-400 font-bold">10%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian Y & Z: Exit Ticket & Pesan Motivasi -->
+                <div class="glass-panel p-6 rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/40 space-y-4">
+                    <h2 class="text-lg font-bold text-indigo-400 flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-ticket"></i> Y & Z. EXIT TICKET & PESAN MOTIVASI
+                    </h2>
+
+                    <div class="space-y-3 text-xs bg-slate-900 p-4 rounded-xl border border-slate-800">
+                        <h4 class="font-bold text-slate-200">Jawaban Exit Ticket Siswa:</h4>
+                        <p><strong>1. Apa itu variable?</strong><br><span class="text-cyan-300">Wadah tempat menyimpan data di dalam memori program.</span></p>
+                        <p><strong>2. Apa perbedaan let dan const?</strong><br><span class="text-cyan-300">Nilai `let` dapat diperbarui, sedangkan `const` nilainya konstan (tetap).</span></p>
+                        <p><strong>3. Tuliskan satu contoh variable JavaScript:</strong><br><span class="text-emerald-400 font-mono">const namaSekolah = "SMKN 1";</span></p>
+                    </div>
+
+                    <!-- Pesan Motivasi Z -->
+                    <div class="p-4 bg-cyan-950/30 border border-cyan-500/30 rounded-xl space-y-2">
+                        <h4 class="font-bold text-cyan-400 flex items-center gap-2">
+                            <i class="fa-solid fa-heart text-rose-500"></i> Z. PESAN UNTUK PESERTA DIDIK
+                        </h4>
+                        <p class="text-xs text-slate-200 italic leading-relaxed">
+                            "Jangan takut ketika program menghasilkan error. Error bukan berarti kamu gagal, melainkan petunjuk bahwa programmu perlu diperbaiki. Programmer yang baik bukan programmer yang tidak pernah mengalami error, tetapi programmer yang mampu mencari dan memperbaiki error."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- JAVASCRIPT LOGIC FOR TAB & RUNNERS -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            const activeTab = document.getElementById(`tab-${tabId}`);
+            if(activeTab) activeTab.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                if(btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-slate-800', 'text-white');
+                    btn.classList.remove('text-slate-300');
+                    document.getElementById('current-tab-title').innerText = btn.querySelector('span').innerText;
+                } else {
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    btn.classList.add('text-slate-300');
+                }
+            });
+
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('hidden');
+            }
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('hidden');
+        });
+
+        function runSimulatedCode(type) {
+            if(type === 'akt1') {
+                const out = document.getElementById('console-output-akt1');
+                out.innerHTML = `
+                    <div class="text-emerald-400">> Budi</div>
+                    <div class="text-amber-400">> 16</div>
+                    <div class="text-amber-400">> 85</div>
+                `;
+            }
+        }
+
+        function runCustomCode(actId) {
+            const code = document.getElementById(`${actId}-editor`).value;
+            const consoleBox = document.getElementById(`${actId}-console`);
+
+            let logs = [];
+            const mockConsole = {
+                log: (...args) => logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' ')),
+                error: (...args) => logs.push('Error: ' + args.join(' '))
+            };
+
+            try {
+                const fn = new Function('console', code);
+                fn(mockConsole);
+                consoleBox.innerHTML = logs.length > 0 
+                    ? logs.map(l => `<div class="text-emerald-400">> ${l}</div>`).join('')
+                    : `<div class="text-slate-500">// Kode berhasil dijalankan</div>`;
+            } catch(e) {
+                consoleBox.innerHTML = `<div class="text-rose-400">> SyntaxError: ${e.message}</div>`;
+            }
+        }
+
+        function checkDebuggingGame() {
+            const code = document.getElementById('akt11-debug-editor').value;
+            const consoleBox = document.getElementById('akt11-console');
+
+            let logs = [];
+            const mockConsole = { log: (...a) => logs.push(a.join(' ')) };
+            try {
+                const fn = new Function('console', code);
+                fn(mockConsole);
+                consoleBox.innerHTML = `
+                    <div class="text-emerald-400 font-bold">✓ LUAR BIASA! KODE BERHASIL DIPERBAIKI:</div>
+                    ${logs.map(l => `<div class="text-cyan-300">> ${l}</div>`).join('')}
+                `;
+            } catch(e) {
+                consoleBox.innerHTML = `<div class="text-rose-400">> Error: ${e.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
